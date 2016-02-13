@@ -1,9 +1,29 @@
+
+# Common tools
+sudo apt-get install git vim
+
+
+### Temp sensor installs
 # Add line to  /boot/config.txt
 echo "dtoverlay=w1-gpio" >> /boot/config.txt
 
 # Add the python lib:
 sudo pip install w1thermsensor
 
+
+### Display installs
+# Add SPI line to /boot/config.txt
+echo "dtparam=spi=on" >> /boot/config.txt
+
+sudo apt-get update
+sudo apt-get install build-essential python-dev python-pip
+sudo pip install RPi.GPIO
+sudo apt-get install python-imaging python-smbus
+
+# Pull repo and install SSD1306 chipset python drivers
+git clone https://github.com/adafruit/Adafruit_Python_SSD1306.git
+cd Adafruit_Python_SSD1306
+sudo python setup.py install
 
 
 # Documentation and Tutorials
@@ -35,3 +55,7 @@ sudo pip install w1thermsensor
 #  
 #  -----
 
+# 
+# OLED Display
+# https://learn.adafruit.com/ssd1306-oled-displays-with-raspberry-pi-and-beaglebone-black
+# https://github.com/adafruit/Adafruit_Python_SSD1306
