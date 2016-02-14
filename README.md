@@ -1,11 +1,14 @@
 
+
+sudo apt-get update
+
 # Common tools
 sudo apt-get install git vim
 
 
 ### Temp sensor installs
 # Add line to  /boot/config.txt
-echo "dtoverlay=w1-gpio" >> /boot/config.txt
+sudo echo "dtoverlay=w1-gpio" >> /boot/config.txt
 
 # Add the python lib:
 sudo pip install w1thermsensor
@@ -15,7 +18,16 @@ sudo pip install w1thermsensor
 # Add SPI line to /boot/config.txt
 echo "dtparam=spi=on" >> /boot/config.txt
 
-sudo apt-get update
+# Add i2c for display (could be done with gui:  sudo raspi-config )
+ #  sudo apt-get install python-smbus
+ #  sudo apt-get install i2c-tools
+ #  
+ #  sudo echo "dtparam=i2c_arm=on" >> /boot/config.txt
+ #  sudo echo "dtparam=i2c1=on" >> /boot/config.txt
+ #  sudo echo "i2c-bcm2708" >> /etc/modules
+ #  sudo echo "i2c-dev" >> /etc/modules
+
+# Add display drivers/image drawing stuff.
 sudo apt-get install build-essential python-dev python-pip
 sudo pip install RPi.GPIO
 sudo apt-get install python-imaging python-smbus
@@ -24,6 +36,9 @@ sudo apt-get install python-imaging python-smbus
 git clone https://github.com/adafruit/Adafruit_Python_SSD1306.git
 cd Adafruit_Python_SSD1306
 sudo python setup.py install
+
+# If errors from repo state, need to force install again after pull
+# sudo python setup.py install --force
 
 
 # Documentation and Tutorials
