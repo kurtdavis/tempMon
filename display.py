@@ -8,6 +8,8 @@ import Image
 import ImageDraw
 import ImageFont
 
+import diskUsage
+
 # Raspberry Pi pin configuration:
 RST = 24
 # Note the following are only used with SPI:
@@ -61,9 +63,20 @@ draw.line((x, bottom, x+shape_width, top), fill=255)
 draw.line((x, top, x+shape_width, bottom), fill=255)
 x += shape_width+padding
 
+# Draw the image buffer.
+disp.image(image)
+disp.display()
 
+print diskUsage.quickCheck()
 
+time.sleep(6.1)
 
+import socket
+
+def getNetIp():
+	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	s.connect(('8.8.8.8', 0))  # connecting to a UDP address doesn't send packets
+	return s.getsockname()[0]
 
 
 
@@ -82,6 +95,7 @@ startpos = width
 
 # Animate text moving in sine wave.
 print 'Press Ctrl-C to quit.'
+print 'IP: ' + getNetIp()
 pos = startpos
 while True:
 	# Clear image buffer by drawing a black filled box.
