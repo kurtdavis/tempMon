@@ -41,6 +41,67 @@ sudo python setup.py install
 # sudo python setup.py install --force
 
 
+### Add Dropbox uploader script
+
+sudo apt-get install -y curl
+cd ~
+git clone https://github.com/andreafabrizi/Dropbox-Uploader.git
+cd Dropbox-Uploader
+chmod a+x dropbox_uploader.sh
+sudo cp dropbox_uploader.sh /usr/local/bin/dropbox_uploader
+
+
+
+
+### Add motion detection... need to setup kernel for video4linux 2 api
+sudo echo "bcm2835_v4l2" >> /etc/modules
+# to check: ls -l /dev/video*
+#   assert: /dev/video0
+#  if fail: sudo modprobe bcm2835_v4l2
+
+sudo apt-get install -y motion
+# fix perms for motion image store:
+sudo mkdir /var/lib/motion
+sudo chown motion:motion /var/lib/motion
+
+#   vim /etc/motion/motion.conf
+## update these lines:
+##   
+##   # Image width (pixels). Valid range: Camera dependent, default: 352
+##   width 1280
+##    
+##   # Image height (pixels). Valid range: Camera dependent, default: 288
+##   height 720
+##   
+##   threshold 3000
+##   minimum_motion_frames 2
+##   ffmpeg_output_movies off
+##   
+##   # Command to be executed when a picture (.ppm|.jpg) is saved (default: none)
+##   # To give the filename as an argument to a command append it with %f
+##   on_picture_save dropbox_uploader -f /home/pi/.dropbox_uploader upload %f "Cloud Cam/"
+
+# start motion on boot
+#   vim /etc/default/motion
+## update the 'no' to 'yes'
+## 
+##    start_motion_daemon=yes
+
+sudo systemctl enable motion
+
+# to inspect motion's captures:
+sudo journalctl -u motion
+
+# Allow motion to read the dropbox settings:
+sudo groupadd dropbox -g777
+sudo usermod -aG dropbox pi
+sudo usermod -aG dropbox motion
+chmod g+r .dropbox_uploader
+sudo chown pi:dropbox .dropbox_uploader
+
+
+
+
 # Documentation and Tutorials
 #  ------------------------------------------------------
 #  Companion Parts Pack for Adventures in Raspberry Pi
