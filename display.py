@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import math
 import time
 
@@ -8,7 +10,8 @@ import Image
 import ImageDraw
 import ImageFont
 
-import diskUsage
+from cageDisplay.facts import diskUsage
+from cageDisplay.facts import ipaddr
 
 # Raspberry Pi pin configuration:
 RST = 24
@@ -71,13 +74,6 @@ print diskUsage.quickCheck()
 
 time.sleep(6.1)
 
-import socket
-
-def getNetIp():
-	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	s.connect(('8.8.8.8', 0))  # connecting to a UDP address doesn't send packets
-	return s.getsockname()[0]
-
 
 
 # Load default font.
@@ -95,7 +91,7 @@ startpos = width
 
 # Animate text moving in sine wave.
 print 'Press Ctrl-C to quit.'
-print 'IP: ' + getNetIp()
+print 'IP: ' + ipaddr.getNetIp()
 pos = startpos
 while True:
 	# Clear image buffer by drawing a black filled box.
