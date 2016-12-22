@@ -6,13 +6,6 @@ import time
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_SSD1306
 
-import Image
-import ImageDraw
-import ImageFont
-
-from cageDisplay.facts import diskUsage
-from cageDisplay.facts import ipaddr
-
 # Raspberry Pi pin configuration:
 RST = 24
 # Note the following are only used with SPI:
