@@ -88,6 +88,8 @@ sudo chown motion:motion /var/lib/motion
 ##    start_motion_daemon=yes
 
 sudo systemctl enable motion
+sudo systemctl restart motion
+
 
 # to inspect motion's captures:
 sudo journalctl -u motion

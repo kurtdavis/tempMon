@@ -70,9 +70,9 @@ x += shape_width+padding
 disp.image(image)
 disp.display()
 
-print diskUsage.quickCheck()
+myDisk = diskUsage.diskUsage();
+print myDisk.quickCheck()
 
-time.sleep(6.1)
 
 
 
@@ -80,8 +80,40 @@ time.sleep(6.1)
 font = ImageFont.load_default()
 
 # Define text and get total width.
-text = 'SSD1306 ORGANIC LED DISPLAY. THIS IS AN OLD SCHOOL DEMO SCROLLER!! GREETZ TO: LADYADA & THE ADAFRUIT CREW, TRIXTER, FUTURE CREW, AND FARBRAUSCH'
+text = 'SSD1306 ORGANIC LED DISPLAY.'
 maxwidth, unused = draw.textsize(text, font=font)
+
+
+
+
+disp.clear() # This clears the display but only when there is a led.display() as well!
+
+# led.draw_text2(x-axis, y-axis, whatyouwanttoprint, size) < Understand?
+# So led.drawtext2() prints simple text to the OLED display like so:
+
+upstairsStr = 'Upstairs: ' + '93deg'
+targetStr   = 'target:   ' + '71deg'
+
+# Draw text.
+# draw.text((x, y), c, font=font, fill=255)
+
+draw.text((0,0),myDisk.quickCheck(),2)
+draw.text((85,0),'HI',4)
+draw.text((2,16),upstairsStr,1)
+draw.text((2,25),targetStr,1)
+disp.image(image)
+disp.display()
+
+exit
+
+time.sleep(6.1)
+
+
+
+
+
+
+
 
 # Set animation and sine wave parameters.
 amplitude = height/4
